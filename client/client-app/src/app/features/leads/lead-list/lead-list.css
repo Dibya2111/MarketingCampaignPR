@@ -1,0 +1,325 @@
+.lead-dashboard {
+  padding: 20px;
+  background: lightgray;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  background: white;
+  padding: 20px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.dashboard-header h1 {
+  color: darkblue;
+  font-size: 28px;
+  margin: 0;
+}
+
+.btn-primary {
+  background: darkblue;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-primary:hover {
+  background: blue;
+}
+
+.btn-export {
+  background: green;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-export:hover {
+  background: darkgreen;
+}
+
+.btn-export:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.filters-section {
+  background: white;
+  padding: 20px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.filter-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: black;
+}
+
+.filter-group input,
+.filter-group select,
+.filter-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.filter-group textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: Arial, sans-serif;
+}
+
+.help-text {
+  color: green;
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.error-message {
+  background: lightpink;
+  border: 2px solid red;
+  color: darkred;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.loading {
+  text-align: center;
+  padding: 50px;
+  color: gray;
+  font-size: 18px;
+}
+
+.table-container {
+  background: white;
+  border: 2px solid gray;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.leads-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leads-table th,
+.leads-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid lightgray;
+}
+
+.leads-table th {
+  background: lightgreen;
+  font-weight: bold;
+  color: darkgreen;
+}
+
+.leads-table td {
+  color: black;
+}
+
+.segment {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.segment-general {
+  background: lightgray;
+  color: black;
+}
+
+.segment-premium {
+  background: lightyellow;
+  color: orange;
+}
+
+.segment-vip {
+  background: lightgreen;
+  color: darkgreen;
+}
+
+.segment-enterprise {
+  background: lightblue;
+  color: darkblue;
+}
+
+.status {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background: lightgreen;
+  color: darkgreen;
+}
+
+.status-inactive {
+  background: lightpink;
+  color: darkred;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-analytics,
+.btn-edit,
+.btn-delete {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-analytics {
+  background: purple;
+  color: white;
+}
+
+.btn-analytics:hover {
+  background: darkmagenta;
+}
+
+.btn-edit {
+  background: orange;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: darkorange;
+}
+
+.btn-delete {
+  background: red;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: darkred;
+}
+
+.no-data {
+  text-align: center;
+  padding: 50px;
+  color: gray;
+  font-style: italic;
+  font-size: 18px;
+}
+
+.pagination-info {
+  text-align: center;
+  color: gray;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: lightyellow;
+  border-radius: 5px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 10px 15px;
+  border: 1px solid gray;
+  background: white;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: lightgray;
+}
+
+.pagination button:disabled {
+  background: lightgray;
+  color: gray;
+  cursor: not-allowed;
+}
+
+.pagination button.active {
+  background: darkblue;
+  color: white;
+  border-color: darkblue;
+}
+
+@media (max-width: 768px) {
+  .lead-dashboard {
+    padding: 10px;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .filter-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .leads-table {
+    min-width: 800px;
+  }
+  
+  .actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+}

@@ -1,0 +1,57 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Verify OTP</h2>
+      <p>Enter the 6-digit code sent to your device</p>
+    </div>
+
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="otpCode">OTP Code</label>
+        <input 
+          type="text" 
+          id="otpCode" 
+          formControlName="otpCode"
+          class="form-control otp-input"
+          placeholder="000000"
+          maxlength="6"
+          autocomplete="one-time-code">
+        <div *ngIf="otpForm.get('otpCode')?.invalid && otpForm.get('otpCode')?.touched" class="error-text">
+          Please enter a valid 6-digit OTP
+        </div>
+      </div>
+
+      <div class="attempts-info" *ngIf="remainingAttempts < 3">
+        <span class="warning">{{remainingAttempts}} attempts remaining</span>
+      </div>
+
+      <button 
+        type="submit" 
+        class="btn-primary btn-full"
+        [disabled]="loading || !otpForm.valid">
+        <span *ngIf="loading">Verifying...</span>
+        <span *ngIf="!loading">Verify OTP</span>
+      </button>
+
+      <div class="resend-section">
+        <button 
+          type="button" 
+          class="btn-link"
+          [disabled]="!canResend || loading"
+          (click)="resendOtp()">
+          <span *ngIf="canResend">Resend OTP</span>
+          <span *ngIf="!canResend">Resend in {{countdown}}s</span>
+        </button>
+      </div>
+
+      <div class="back-section">
+        <button type="button" class="btn-secondary" (click)="goBack()">
+          Back to Login
+        </button>
+      </div>
+    </form>
+
+    <div *ngIf="error" class="alert alert-error">{{error}}</div>
+    <div *ngIf="success" class="alert alert-success">{{success}}</div>
+  </div>
+</div>

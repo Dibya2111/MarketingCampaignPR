@@ -1,0 +1,103 @@
+<div class="register-container">
+  <div class="register-left">
+    <div class="brand-content">
+      <h1>MarketSaathi</h1>
+      <p>Join thousands of marketers managing successful campaigns</p>
+    </div>
+  </div>
+  
+  <div class="register-right">
+    <div class="register-card">
+      <div class="register-header">
+        <h2>Create Your Account</h2>
+        <p>Start your marketing journey today</p>
+      </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <div class="form-group">
+        <label for="username">Email</label>
+        <input
+          type="email"
+          id="username"
+          formControlName="username"
+          class="form-control"
+          [class.error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+          placeholder="Enter your email"
+        />
+        @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+          <div class="error-message">
+            @if (registerForm.get('username')?.errors?.['required']) {
+              <span>Email is required</span>
+            }
+            @if (registerForm.get('username')?.errors?.['email']) {
+              <span>Please enter a valid email</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+          placeholder="Enter your password"
+        />
+        <div class="password-requirements">
+          <small>Password must contain:</small>
+          <ul>
+            <li>8-15 characters</li>
+            <li>At least one uppercase letter</li>
+            <li>At least one lowercase letter</li>
+            <li>At least one digit</li>
+            <li>At least one special character (@$!%*?&)</li>
+          </ul>
+        </div>
+        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+          <div class="error-message">
+            @if (registerForm.get('password')?.errors?.['required']) {
+              <span>Password is required</span>
+            }
+            @if (registerForm.get('password')?.errors?.['pattern']) {
+              <span>Password doesn't meet requirements</span>
+            }
+          </div>
+        }
+      </div>
+
+      @if (error) {
+        <div class="error-message">
+          {{ error }}
+        </div>
+      }
+
+      @if (success) {
+        <div class="success-message">
+          {{ success }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="registerForm.invalid || loading"
+      >
+        @if (loading) {
+          <span>Creating Account...</span>
+        } @else {
+          <span>Create Account</span>
+        }
+      </button>
+    </form>
+
+    <div class="register-footer">
+      <p>Already have an account? 
+        <a (click)="navigateToLogin()" class="link">Sign in here</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</div>

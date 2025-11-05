@@ -1,0 +1,175 @@
+<div class="campaign-dashboard">
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1>Campaign Dashboard</h1>
+      <div class="header-actions">
+        <button class="btn-export" (click)="exportCampaigns()" [disabled]="loading">
+          Export Campaigns
+        </button>
+        <button class="btn-primary" (click)="createCampaign()">+ New Campaign</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section">
+    <div class="filter-row">
+      <div class="filter-group">
+        <label>Campaign Name</label>
+        <input type="text" [(ngModel)]="filters.campaignName" (input)="onFilterChange()" placeholder="Search campaigns...">
+      </div>
+      
+      <div class="filter-group">
+        <label>Start Date</label>
+        <input type="date" [(ngModel)]="filters.startDate" (change)="onFilterChange()">
+      </div>
+      
+      <div class="filter-group">
+        <label>End Date</label>
+        <input type="date" [(ngModel)]="filters.endDate" (change)="onFilterChange()">
+      </div>
+      
+      <div class="filter-group">
+        <label>Status</label>
+        <select [(ngModel)]="filters.status" (change)="onFilterChange()">
+          <option value="">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-group">
+        <label>Agencies</label>
+        <div class="multi-select">
+          @for (agency of agencies; track agency.id) {
+            <label class="checkbox-label">
+              <input type="checkbox" 
+                     [checked]="filters.agencies.includes(agency.id)"
+                     (change)="toggleMultiSelect(filters.agencies, agency.id)">
+              {{ agency.name }}
+            </label>
+          }
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <label>Buyers</label>
+        <div class="multi-select">
+          @for (buyer of buyers; track buyer.id) {
+            <label class="checkbox-label">
+              <input type="checkbox" 
+                     [checked]="filters.buyers.includes(buyer.id)"
+                     (change)="toggleMultiSelect(filters.buyers, buyer.id)">
+              {{ buyer.name }}
+            </label>
+          }
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <label>Brands</label>
+        <div class="multi-select">
+          @for (brand of brands; track brand.id) {
+            <label class="checkbox-label">
+              <input type="checkbox" 
+                     [checked]="filters.brands.includes(brand.id)"
+                     (change)="toggleMultiSelect(filters.brands, brand.id)">
+              {{ brand.name }}
+            </label>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (loading) {
+    <div class="loading">Loading campaigns...</div>
+  } @else {
+    <!-- Table -->
+    <div class="table-container">
+      <table class="campaigns-table">
+        <thead>
+          <tr>
+            <th (click)="onSort('campaignName')" class="sortable">
+              Campaign Name {{ getSortIcon('campaignName') }}
+            </th>
+            <th (click)="onSort('startDate')" class="sortable">
+              Start Date {{ getSortIcon('startDate') }}
+            </th>
+            <th (click)="onSort('endDate')" class="sortable">
+              End Date {{ getSortIcon('endDate') }}
+            </th>
+            <th (click)="onSort('totalLeads')" class="sortable">
+              Total Leads {{ getSortIcon('totalLeads') }}
+            </th>
+            <th (click)="onSort('openRate')" class="sortable">
+              Open Rate {{ getSortIcon('openRate') }}
+            </th>
+            <th (click)="onSort('conversionRate')" class="sortable">
+              Conversion Rate {{ getSortIcon('conversionRate') }}
+            </th>
+            <th>Agency</th>
+            <th>Buyer</th>
+            <th>Brand</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (campaign of paginatedCampaigns; track campaign.campaignId) {
+            <tr>
+              <td>{{ campaign.campaignName }}</td>
+              <td>{{ campaign.startDate }}</td>
+              <td>{{ campaign.endDate }}</td>
+              <td>{{ campaign.totalLeads || 0 }}</td>
+              <td>{{ campaign.openRate ? (campaign.openRate + '%') : '-' }}</td>
+              <td>{{ campaign.conversionRate ? (campaign.conversionRate + '%') : '-' }}</td>
+              <td>{{ getAgencyName(campaign.agencyId) }}</td>
+              <td>{{ getBuyerName(campaign.buyerId) }}</td>
+              <td>{{ getBrandName(campaign.brandId) }}</td>
+              <td>
+                <span class="status" [class]="'status-' + campaign.status.toLowerCase()">
+                  {{ campaign.status }}
+                </span>
+              </td>
+              <td class="actions">
+                <button class="btn-analytics" (click)="viewAnalytics(campaign.campaignId)">Analytics</button>
+                <button class="btn-edit" (click)="editCampaign(campaign.campaignId)">Edit</button>
+                <button class="btn-delete" (click)="deleteCampaign(campaign)">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      
+      @if (paginatedCampaigns.length === 0) {
+        <div class="no-data">No campaigns found</div>
+      }
+    </div>
+
+    <!-- Pagination Info -->
+    <div class="pagination-info">
+      Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ Math.min(currentPage * pageSize, filteredCampaigns.length) }} of {{ filteredCampaigns.length }} campaigns ({{ pageSize }} per page)
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages > 1) {
+      <div class="pagination">
+        <button [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+        @for (page of [].constructor(totalPages); track $index) {
+          <button [class.active]="currentPage === $index + 1" (click)="onPageChange($index + 1)">
+            {{ $index + 1 }}
+          </button>
+        }
+        <button [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">Next</button>
+      </div>
+    }
+  }
+</div>

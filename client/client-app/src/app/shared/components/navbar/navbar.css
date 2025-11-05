@@ -1,0 +1,242 @@
+.navbar {
+  background: rgb(239, 236, 236);
+  padding: 15px;
+  color: rgb(213, 13, 13);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.brand a {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(213, 13, 13);
+  text-decoration: none;
+}
+
+.brand a:hover {
+  color: rgb(35, 142, 178);
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color:rgb(213, 13, 13);
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.nav-links a:hover {
+  background: blue;
+  color: bisque;
+}
+
+.nav-links a.active {
+  background: lightblue;
+  color: darkblue;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.session-timer {
+  background: red;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-name {
+  color: white;
+  font-weight: bold;
+}
+
+.btn-logout {
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  background: darkred;
+}
+
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.burger-menu span {
+  width: 25px;
+  height: 3px;
+  background: rgb(93, 101, 204);
+  margin: 3px 0;
+  transition: all 0.3s ease;
+}
+
+.burger-menu.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+.mobile-nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: darkblue;
+  border-top: 2px solid blue;
+  padding: 20px;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mobile-nav.open {
+  display: flex;
+}
+
+.mobile-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  background: blue;
+}
+
+.mobile-nav a:hover {
+  background: lightblue;
+  color: darkblue;
+}
+
+.mobile-nav a.active {
+  background: lightblue;
+  color: darkblue;
+}
+
+.mobile-logout {
+  background: red;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.mobile-logout:hover {
+  background: darkred;
+}
+
+/* Desktop/Mobile Visibility */
+.desktop-nav {
+  display: flex;
+}
+
+.desktop-logout {
+  display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-left {
+    gap: 15px;
+  }
+  
+  .brand a {
+    font-size: 20px;
+  }
+  
+  .desktop-nav {
+    display: none;
+  }
+  
+  .desktop-logout {
+    display: none;
+  }
+  
+  .burger-menu {
+    display: flex;
+  }
+  
+  .navbar-right {
+    gap: 15px;
+  }
+  
+  .session-timer {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+  
+  .user-name {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px;
+  }
+  
+  .brand a {
+    font-size: 18px;
+  }
+  
+  .navbar-right {
+    gap: 10px;
+  }
+  
+  .session-timer {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+  
+  .user-name {
+    font-size: 12px;
+  }
+}

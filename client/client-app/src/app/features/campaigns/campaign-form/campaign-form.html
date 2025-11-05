@@ -1,0 +1,147 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Campaign' : 'Create New Campaign' }}</h1>
+  </div>
+
+  @if (loading && isEditMode) {
+    <div class="loading">Loading campaign data...</div>
+  } @else {
+    <form [formGroup]="campaignForm" (ngSubmit)="onSubmit()" class="campaign-form">
+      @if (success) {
+        <div class="success-message">
+          {{ success }}
+        </div>
+      }
+
+      @if (error) {
+        <div class="error-message">
+          {{ error }}
+        </div>
+      }
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="campaignName">Campaign Name *</label>
+          <input
+            type="text"
+            id="campaignName"
+            formControlName="campaignName"
+            class="form-control"
+            [class.error]="campaignForm.get('campaignName')?.invalid && campaignForm.get('campaignName')?.touched"
+            placeholder="Enter campaign name"
+          />
+          @if (campaignForm.get('campaignName')?.invalid && campaignForm.get('campaignName')?.touched) {
+            <div class="error-text">
+              @if (campaignForm.get('campaignName')?.errors?.['required']) {
+                <span>Campaign name is required</span>
+              }
+              @if (campaignForm.get('campaignName')?.errors?.['minlength']) {
+                <span>Campaign name must be at least 3 characters</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status *</label>
+          <select
+            id="status"
+            formControlName="status"
+            class="form-control"
+          >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startDate">Start Date *</label>
+          <input
+            type="date"
+            id="startDate"
+            formControlName="startDate"
+            class="form-control"
+            [class.error]="campaignForm.get('startDate')?.invalid && campaignForm.get('startDate')?.touched"
+          />
+          @if (campaignForm.get('startDate')?.invalid && campaignForm.get('startDate')?.touched) {
+            <div class="error-text">
+              <span>Start date is required</span>
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">End Date *</label>
+          <input
+            type="date"
+            id="endDate"
+            formControlName="endDate"
+            class="form-control"
+            [class.error]="campaignForm.get('endDate')?.invalid && campaignForm.get('endDate')?.touched"
+          />
+          @if (campaignForm.get('endDate')?.invalid && campaignForm.get('endDate')?.touched) {
+            <div class="error-text">
+              <span>End date is required</span>
+            </div>
+          }
+        </div>
+      </div>
+
+
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="agencyId">Agency</label>
+          <select id="agencyId" formControlName="agencyId" class="form-control">
+            <option value="" disabled>Please select an agency</option>
+            @for (agency of agencies; track agency.id) {
+              <option [value]="agency.id">{{ agency.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="buyerId">Buyer</label>
+          <select id="buyerId" formControlName="buyerId" class="form-control">
+            <option value="" disabled>Please select a buyer</option>
+            @for (buyer of buyers; track buyer.id) {
+              <option [value]="buyer.id">{{ buyer.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="brandId">Brand</label>
+          <select id="brandId" formControlName="brandId" class="form-control">
+            <option value="" disabled>Please select a brand</option>
+            @for (brand of brands; track brand.id) {
+              <option [value]="brand.id">{{ brand.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="cancel()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="campaignForm.invalid || loading"
+        >
+          @if (loading) {
+            <span>{{ isEditMode ? 'Updating...' : 'Creating...' }}</span>
+          } @else {
+            <span>{{ isEditMode ? 'Update Campaign' : 'Create Campaign' }}</span>
+          }
+        </button>
+      </div>
+    </form>
+  }
+</div>

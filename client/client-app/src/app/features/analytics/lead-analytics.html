@@ -1,0 +1,37 @@
+<div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Lead Engagement Analytics</h3>
+      <button class="btn-close" (click)="closeModal()">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+      <div *ngIf="loading" class="loading">Loading metrics...</div>
+      <div *ngIf="error" class="alert alert-error">{{error}}</div>
+      
+      <div *ngIf="!loading && !error && metrics.length > 0" class="metrics-list">
+        <div *ngFor="let metric of metrics" class="metric-item">
+          <div class="metric-row">
+            <span class="metric-label">Open Rate:</span>
+            <span class="metric-value">{{metric.openRate || 0}}%</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Click Rate:</span>
+            <span class="metric-value">{{metric.clickRate || 0}}%</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Conversion Rate:</span>
+            <span class="metric-value">{{metric.conversionRate || 0}}%</span>
+          </div>
+          <div class="metric-date">
+            Last updated: {{metric.lastModifiedDate | date:'short'}}
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="!loading && !error && metrics.length === 0" class="no-data">
+        No engagement metrics found for this lead.
+      </div>
+    </div>
+  </div>
+</div>

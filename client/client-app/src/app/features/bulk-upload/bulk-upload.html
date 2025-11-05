@@ -1,0 +1,186 @@
+<div class="bulk-upload-container">
+  <header class="page-header">
+    <h1>Bulk Upload Leads</h1>
+    <p>Upload multiple leads at once using a CSV file</p>
+  </header>
+
+  <div class="upload-section">
+    <div class="upload-card">
+      <h3>Upload CSV File</h3>
+      <h4 style="color: red;">* Please refer the below Template Rules before Uploading</h4>
+      <form [formGroup]="uploadForm" (ngSubmit)="onUpload()">
+        
+        <div class="form-group">
+          <label for="forceCampaignId">Force Campaign (Optional)</label>
+          <select id="forceCampaignId" formControlName="forceCampaignId" class="form-control">
+            <option value="">Select campaign to apply to all records</option>
+            <option *ngFor="let campaign of campaigns" [value]="campaign.campaignId">
+              {{campaign.campaignName}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="csvFile">CSV File *</label>
+          <input type="file" id="csvFile" accept=".csv" (change)="onFileSelected($event)" class="form-control">
+          <small class="help-text">Only CSV files are supported. Use the template below for correct format.</small>
+        </div>
+
+        <button type="submit" class="btn-primary" [disabled]="loading || !selectedFile || !previewData.length">
+          <span *ngIf="loading">Uploading...</span>
+          <span *ngIf="!loading">Upload {{ previewData.length }} Leads</span>
+        </button>
+      </form>
+
+      <div *ngIf="error" class="alert alert-error">{{error}}</div>
+      <div *ngIf="success" class="alert alert-success">{{success}}</div>
+    </div>
+  </div>
+
+  <div *ngIf="previewData.length > 0" class="preview-section">
+    <div class="upload-card">
+      <h3>CSV Preview ({{ previewData.length }} leads found)</h3>
+      <p>Review your data before uploading. Showing {{ getDisplayedLeads().length }} of {{ previewData.length }} leads:</p>
+      
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Campaign ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let lead of getDisplayedLeads()">
+              <td>{{ lead.name }}</td>
+              <td>{{ lead.email }}</td>
+              <td>{{ lead.phone || '-' }}</td>
+              <td>{{ lead.campaignId || 'Will use Force Campaign' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div *ngIf="previewTotalPages > 1" class="pagination">
+        <button [disabled]="previewCurrentPage === 1" (click)="onPreviewPageChange(previewCurrentPage - 1)">Previous</button>
+        <span class="page-info">Page {{ previewCurrentPage }} of {{ previewTotalPages }}</span>
+        <button [disabled]="previewCurrentPage === previewTotalPages" (click)="onPreviewPageChange(previewCurrentPage + 1)">Next</button>
+      </div>
+      
+      <div class="preview-summary">
+        <p><strong>Summary:</strong> {{ getValidLeadsCount() }} valid leads, {{ getInvalidLeadsCount() }} invalid leads</p>
+        <button class="btn-secondary" (click)="clearPreview()">Clear Preview</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="template-section">
+    <h3>CSV Template</h3>
+    <p>Use this exact format for your CSV file:</p>
+    <div class="template-container">
+      <div class="template-header">
+        <span>Name</span>
+        <span>Email</span>
+        <span>Phone</span>
+        <span>CampaignId</span>
+      </div>
+      <div class="template-row">
+        <span>Rakesh Jha</span>
+        <span>rakesh.jhs@gmail.com</span>
+        <span>+919853192292</span>
+        <span>1</span>
+      </div>
+      <div class="template-row">
+        <span>Jemimiah Rodrigues</span>
+        <span>jemi.rodrigues@yahoo.com</span>
+        <span></span>
+        <span>2</span>
+      </div>
+    </div>
+    <div class="template-notes">
+      <h4>Column Requirements:</h4>
+      <ul>
+        <li><strong>Name</strong>: Required - Lead's full name</li>
+        <li><strong>Email</strong>: Required - Valid email address</li>
+        <li><strong>Phone</strong>: Optional - Phone number with country code</li>
+        <li><strong>CampaignId</strong>: Required - Numeric campaign ID (leave empty to use Force Campaign)</li>
+      </ul>
+      <button class="btn-download" (click)="downloadTemplate()">Download CSV Template</button>
+    </div>
+  </div>
+
+  <div class="history-section">
+    <h3>Upload History</h3>
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Upload ID</th>
+            <th>Date</th>
+            <th>Total Records</th>
+            <th>Valid</th>
+            <th>Invalid</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of uploadLogs">
+            <td>{{log.uploadId}}</td>
+            <td>{{log.uploadedAt | date:'short'}}</td>
+            <td>{{log.totalRecords}}</td>
+            <td class="success-text">{{log.validRecords}}</td>
+            <td class="error-text">{{log.invalidRecords}}</td>
+            <td>
+              <button class="btn-secondary btn-sm" (click)="viewDetails(log.uploadId)">
+                View Details
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="uploadLogs.length === 0">
+            <td colspan="6" class="no-data">No upload history found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showDetailsModal" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Upload Details - ID: {{selectedUploadId}}</h3>
+      <button class="btn-close" (click)="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Message</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let detail of selectedUploadDetails">
+              <td>{{detail.leadEmail}}</td>
+              <td>
+                <span [class]="detail.validationStatus === 'Valid' ? 'status-valid' : 'status-invalid'">
+                  {{detail.validationStatus}}
+                </span>
+              </td>
+              <td>{{detail.message}}</td>
+              <td>{{detail.createdDate | date:'short'}}</td>
+            </tr>
+            <tr *ngIf="selectedUploadDetails.length === 0">
+              <td colspan="4" class="no-data">No details found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

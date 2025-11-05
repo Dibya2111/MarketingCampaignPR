@@ -1,0 +1,171 @@
+.campaign-dashboard {
+  padding: 20px;
+  background: lightgray;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  background: white;
+  padding: 20px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  color: darkblue;
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.dashboard-header h2 {
+  color: blue;
+  font-size: 20px;
+  margin: 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 50px;
+  color: gray;
+  font-size: 18px;
+}
+
+.alert-error {
+  background: lightpink;
+  border: 2px solid red;
+  color: darkred;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.metric-card {
+  background: white;
+  padding: 30px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.metric-card h3 {
+  color: darkblue;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.metric-value {
+  font-size: 40px;
+  font-weight: bold;
+  color: green;
+  margin-bottom: 10px;
+}
+
+.metric-detail {
+  color: gray;
+  font-size: 14px;
+}
+
+.metric-value.small {
+  font-size: 20px;
+}
+
+.chart-section {
+  background: white;
+  padding: 30px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.chart-header h3 {
+  color: darkblue;
+  margin: 0;
+  font-size: 22px;
+}
+
+.btn-recalculate {
+  background: orange;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-recalculate:hover {
+  background: darkorange;
+}
+
+.btn-recalculate:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.chart-container {
+  height: 400px;
+  position: relative;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.no-data {
+  text-align: center;
+  padding: 50px;
+  background: white;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-top: 30px;
+  color: gray;
+  font-size: 18px;
+}
+
+.btn-primary {
+  background: darkblue;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.btn-primary:hover {
+  background: blue;
+}
+
+@media (max-width: 768px) {
+  .campaign-dashboard {
+    padding: 10px;
+  }
+  
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .chart-container {
+    height: 300px;
+  }
+}

@@ -1,0 +1,137 @@
+<div class="lead-dashboard">
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1>Lead Management</h1>
+      <div class="header-actions">
+        <button class="btn-export" (click)="exportLeads()" [disabled]="loading">
+          Export Leads
+        </button>
+        <button class="btn-primary" (click)="createLead()">+ New Lead</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section">
+    <div class="filter-row">
+      <div class="filter-group">
+        <label>Single Search</label>
+        <input type="text" [(ngModel)]="filters.search" (input)="onFilterChange()" placeholder="Search by name or email...">
+      </div>
+      
+      <div class="filter-group">
+        <label>Multiple Lead Search</label>
+        <textarea 
+          [(ngModel)]="multipleSearch" 
+          (input)="onMultipleSearchChange()" 
+          placeholder="Enter multiple names or emails (one per line press Enter to search for other lead)"
+          rows="3">
+        </textarea>
+        @if (multipleSearch) {
+          <small class="help-text">{{ getSearchResultsCount() }} leads found</small>
+        }
+      </div>
+      
+      <div class="filter-group">
+        <label>Campaign</label>
+        <select [(ngModel)]="filters.campaignId" (change)="onFilterChange()">
+          <option value="">All Campaigns</option>
+          @for (campaign of campaigns; track campaign.campaignId) {
+            <option [value]="campaign.campaignId">{{ campaign.campaignName }}</option>
+          }
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label>Segment</label>
+        <select [(ngModel)]="filters.segment" (change)="onFilterChange()">
+          <option value="">All Segments</option>
+          @for (segment of segments; track segment.id) {
+            <option [value]="segment.name">{{ segment.name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </div>
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (loading) {
+    <div class="loading">Loading leads...</div>
+  } @else {
+    <!-- Table -->
+    <div class="table-container">
+      <table class="leads-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Campaign</th>
+            <th>Segment</th>
+            <th>Created Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (lead of leads; track lead.leadId) {
+            <tr>
+              <td>{{ lead.name }}</td>
+              <td>{{ lead.email }}</td>
+              <td>{{ lead.phone || '-' }}</td>
+              <td>{{ getCampaignName(lead.campaignId) }}</td>
+              <td>
+                <span class="segment" [class]="'segment-' + (lead.segment || 'general').toLowerCase()">
+                  {{ lead.segment || 'General' }}
+                </span>
+              </td>
+              <td>{{ lead.createdDate | date:'short' }}</td>
+              <td>
+                <span class="status" [class]="lead.isActive ? 'status-active' : 'status-inactive'">
+                  {{ lead.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td class="actions">
+                <button class="btn-analytics" (click)="viewAnalytics(lead.leadId)">Analytics</button>
+                <button class="btn-edit" (click)="editLead(lead.leadId)">Edit</button>
+                <button class="btn-delete" (click)="deleteLead(lead)">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      
+      @if (leads.length === 0) {
+        <div class="no-data">No leads found</div>
+      }
+    </div>
+
+    <!-- Pagination Info -->
+    <div class="pagination-info">
+      Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ Math.min(currentPage * pageSize, totalLeads) }} of {{ totalLeads }} leads ({{ pageSize }} per page)
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages > 1) {
+      <div class="pagination">
+        <button [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+        @for (page of [].constructor(totalPages); track $index) {
+          <button [class.active]="currentPage === $index + 1" (click)="onPageChange($index + 1)">
+            {{ $index + 1 }}
+          </button>
+        }
+        <button [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">Next</button>
+      </div>
+    }
+  }
+</div>
+
+<!-- Lead Analytics Modal -->
+<app-lead-analytics 
+  [leadId]="selectedLeadId" 
+  [showModal]="showAnalyticsModal"
+  (showModalChange)="showAnalyticsModal = $event">
+</app-lead-analytics>

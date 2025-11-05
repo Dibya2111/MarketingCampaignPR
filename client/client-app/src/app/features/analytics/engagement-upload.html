@@ -1,0 +1,105 @@
+<div class="engagement-upload">
+  <header class="page-header">
+    <h1>Engagement Data Upload</h1>
+    <p>Add engagement metrics for leads and campaigns</p>
+  </header>
+
+  <div class="upload-card">
+    <form [formGroup]="engagementForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="leadId">Existing Lead</label>
+          <select id="leadId" formControlName="leadId" class="form-control">
+            <option value="">Select existing lead ({{leads.length}} available)</option>
+            <option *ngFor="let lead of leads" [value]="lead.leadId">
+              {{lead.name}} ({{lead.email}})
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="campaignId">Campaign *</label>
+          <select id="campaignId" formControlName="campaignId" class="form-control">
+            <option value="">Select campaign</option>
+            <option *ngFor="let campaign of campaigns" [value]="campaign.campaignId">
+              {{campaign.campaignName}}
+            </option>
+          </select>
+          @if (engagementForm.get('campaignId')?.disabled) {
+            <small class="help-text">Campaign auto-selected based on selected lead</small>
+          }
+        </div>
+      </div>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="manualLeadName">Manual Lead Name</label>
+          <input type="text" id="manualLeadName" formControlName="manualLeadName" 
+                 class="form-control" placeholder="Enter lead name">
+        </div>
+
+        <div class="form-group">
+          <label for="manualLeadEmail">Manual Lead Email</label>
+          <input type="email" id="manualLeadEmail" formControlName="manualLeadEmail" 
+                 class="form-control" placeholder="Enter lead email">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="emailsSent">Emails Sent *</label>
+          <input type="number" id="emailsSent" formControlName="emailsSent" class="form-control" min="0">
+        </div>
+
+        <div class="form-group">
+          <label for="emailsOpened">Emails Opened *</label>
+          <input type="number" id="emailsOpened" formControlName="emailsOpened" class="form-control" min="0">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="clicks">Clicks *</label>
+          <input type="number" id="clicks" formControlName="clicks" class="form-control" min="0">
+        </div>
+
+        <div class="form-group">
+          <label for="conversions">Conversions *</label>
+          <input type="number" id="conversions" formControlName="conversions" class="form-control" min="0">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="generateSampleData(engagementForm.get('leadId')?.value)" 
+                [disabled]="!engagementForm.get('leadId')?.value">
+          Generate Sample Data
+        </button>
+        <button type="submit" class="btn-primary" [disabled]="loading">
+          <span *ngIf="loading">Creating...</span>
+          <span *ngIf="!loading">Create Engagement Metric</span>
+        </button>
+      </div>
+    </form>
+
+    <div *ngIf="error" class="alert alert-error">{{error}}</div>
+    <div *ngIf="success" class="alert alert-success">{{success}}</div>
+  </div>
+  
+<!-- Auto Generated datas -->
+  <div class="quick-actions">
+    <h3>Quick Test Data</h3>
+    <p>Generate sample engagement data for the first 5 leads:</p>
+    <div class="quick-buttons">
+      <button *ngFor="let lead of leads.slice(0, 5)" 
+              class="btn-quick" 
+              (click)="generateSampleData(lead.leadId)">
+        {{lead.name}}
+      </button>
+    </div>
+  </div>
+</div>

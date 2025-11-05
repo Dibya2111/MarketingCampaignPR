@@ -1,0 +1,143 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Lead' : 'Create New Lead' }}</h1>
+  </div>
+
+  @if (loading && isEditMode) {
+    <div class="loading">Loading lead data...</div>
+  } @else {
+    <form [formGroup]="leadForm" (ngSubmit)="onSubmit()" class="lead-form">
+      @if (success) {
+        <div class="success-message">{{ success }}</div>
+      }
+
+      @if (error) {
+        <div class="error-message">{{ error }}</div>
+      }
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            [class.error]="leadForm.get('name')?.invalid && leadForm.get('name')?.touched"
+            placeholder="Enter full name"
+          />
+          @if (leadForm.get('name')?.invalid && leadForm.get('name')?.touched) {
+            <div class="error-text">
+              @if (leadForm.get('name')?.errors?.['required']) {
+                <span>Name is required</span>
+              }
+              @if (leadForm.get('name')?.errors?.['minlength']) {
+                <span>Name must be at least 2 characters</span>
+              }
+              @if (leadForm.get('name')?.errors?.['maxlength']) {
+                <span>Name must not exceed 150 characters</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [class.error]="leadForm.get('email')?.invalid && leadForm.get('email')?.touched"
+            placeholder="Enter email address"
+          />
+          @if (leadForm.get('email')?.invalid && leadForm.get('email')?.touched) {
+            <div class="error-text">
+              @if (leadForm.get('email')?.errors?.['required']) {
+                <span>Email is required</span>
+              }
+              @if (leadForm.get('email')?.errors?.['email']) {
+                <span>Please enter a valid email</span>
+              }
+              @if (leadForm.get('email')?.errors?.['maxlength']) {
+                <span>Email must not exceed 150 characters</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            class="form-control"
+            [class.error]="leadForm.get('phone')?.invalid && leadForm.get('phone')?.touched"
+            placeholder="Enter phone number"
+          />
+          @if (leadForm.get('phone')?.invalid && leadForm.get('phone')?.touched) {
+            <div class="error-text">
+              @if (leadForm.get('phone')?.errors?.['maxlength']) {
+                <span>Phone must not exceed 30 characters</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="campaignId">Campaign</label>
+          <select id="campaignId" formControlName="campaignId" class="form-control">
+            <option value="">Please select a campaign</option>
+            @for (campaign of campaigns; track campaign.campaignId) {
+              <option [value]="campaign.campaignId">{{ campaign.campaignName }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="segment">Segment</label>
+          <select id="segment" formControlName="segment" class="form-control">
+            <option value="">Auto-assign segment</option>
+            @for (segment of segments; track segment.id) {
+              <option [value]="segment.name">{{ segment.name }}</option>
+            }
+          </select>
+          @if (previewedSegment && !isEditMode) {
+            <div class="segment-preview">
+              Auto-suggested segment: <strong>{{ previewedSegment }}</strong>
+            </div>
+          }
+        </div>
+
+        @if (isEditMode) {
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="isActive">
+              Active Lead
+            </label>
+          </div>
+        }
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="leadForm.invalid || loading"
+        >
+          @if (loading) {
+            <span>{{ isEditMode ? 'Updating...' : 'Creating...' }}</span>
+          } @else {
+            <span>{{ isEditMode ? 'Update Lead' : 'Create Lead' }}</span>
+          }
+        </button>
+      </div>
+    </form>
+  }
+</div>

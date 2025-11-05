@@ -1,0 +1,96 @@
+<div class="login-container">
+  <div class="login-left">
+    <div class="brand-content">
+      <h1>MarketSaathi</h1>
+      <p>Best Marketing Campaign Management Platform</p>
+    </div>
+  </div>
+  
+  <div class="login-right">
+    <div class="login-card">
+      <div class="login-header">
+        <h2>Welcome Back</h2>
+        <p>Please sign in to your account</p>
+      </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">Email</label>
+        <input
+          type="email"
+          id="username"
+          formControlName="username"
+          class="form-control"
+          [class.error]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+          placeholder="Enter your email"
+        />
+        @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
+          <div class="error-message">
+            @if (loginForm.get('username')?.errors?.['required']) {
+              <span>Email is required</span>
+            }
+            @if (loginForm.get('username')?.errors?.['email']) {
+              <span>Please enter a valid email</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          placeholder="Enter your password"
+        />
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <div class="error-message">
+            @if (loginForm.get('password')?.errors?.['required']) {
+              <span>Password is required</span>
+            }
+            @if (loginForm.get('password')?.errors?.['minlength']) {
+              <span>Password must be at least 8 characters</span>
+            }
+            @if (loginForm.get('password')?.errors?.['maxlength']) {
+              <span>Password must not exceed 15 characters</span>
+            }
+          </div>
+        }
+      </div>
+
+      @if (sessionMessage) {
+        <div class="session-message">
+          {{ sessionMessage }}
+        </div>
+      }
+
+      @if (error) {
+        <div class="error-message">
+          {{ error }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="loginForm.invalid || loading"
+      >
+        @if (loading) {
+          <span>Signing in...</span>
+        } @else {
+          <span>Sign In</span>
+        }
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Don't have an account? 
+        <a (click)="navigateToRegister()" class="link">Sign up here</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</div>

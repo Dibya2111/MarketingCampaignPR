@@ -1,0 +1,155 @@
+.form-container {
+  padding: 20px;
+  background: lightgray;
+  min-height: 100vh;
+}
+
+.form-header {
+  background: white;
+  padding: 20px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-header h1 {
+  color: darkblue;
+  font-size: 28px;
+  margin: 0;
+}
+
+.campaign-form {
+  background: white;
+  padding: 30px;
+  border: 2px solid gray;
+  border-radius: 10px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: black;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: blue;
+  outline: none;
+}
+
+.form-control.error {
+  border-color: red;
+}
+
+.error-text {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.success-message {
+  background: lightgreen;
+  border: 2px solid green;
+  color: darkgreen;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.error-message {
+  background: lightpink;
+  border: 2px solid red;
+  color: darkred;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: darkblue;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-primary:hover {
+  background: blue;
+}
+
+.btn-primary:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: gray;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-secondary:hover {
+  background: darkgray;
+}
+
+.loading {
+  text-align: center;
+  padding: 50px;
+  color: gray;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: 10px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+}

@@ -1,0 +1,54 @@
+<div class="campaign-dashboard">
+  <header class="dashboard-header">
+    <h1>Campaign Analytics</h1>
+    <h2 *ngIf="campaign">{{campaign.campaignName}}</h2>
+  </header>
+
+  <div *ngIf="loading" class="loading">Loading metrics...</div>
+  <div *ngIf="error" class="alert alert-error">{{error}}</div>
+
+  <div *ngIf="!loading && !error" class="metrics-grid">
+    <div class="metric-card">
+      <h3>Total Leads</h3>
+      <div class="metric-value">{{snapshots[0]?.totalLeads || 0}}</div>
+    </div>
+
+    <div class="metric-card">
+      <h3>Open Rate</h3>
+      <div class="metric-value">{{snapshots[0]?.openRate || 0}}%</div>
+    </div>
+
+    <div class="metric-card">
+      <h3>Conversion Rate</h3>
+      <div class="metric-value">{{snapshots[0]?.conversionRate || 0}}%</div>
+    </div>
+
+    <div class="metric-card">
+      <h3>Last Updated</h3>
+      <div class="metric-value small">{{snapshots[0]?.dateCaptured | date:'short'}}</div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && snapshots.length > 0" class="chart-section">
+    <div class="chart-header">
+      <h3>Performance Trend</h3>
+      <button class="btn-recalculate" (click)="recalculateSnapshot()" [disabled]="loading">
+        Recalculate Snapshot
+      </button>
+    </div>
+    <div class="chart-container">
+      <canvas baseChart
+              [data]="lineChartData"
+              [options]="lineChartOptions"
+              [type]="lineChartType">
+      </canvas>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && snapshots.length === 0" class="no-data">
+    <p>No performance snapshots available.</p>
+    <button class="btn-primary" (click)="recalculateSnapshot()" [disabled]="loading">
+      Create First Snapshot
+    </button>
+  </div>
+</div>

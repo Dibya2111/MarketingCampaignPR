@@ -1,0 +1,36 @@
+<nav class="navbar">
+  <div class="navbar-content">
+    <div class="navbar-left">
+      <div class="brand">
+        <a routerLink="/dashboard">MarketSaathi</a>
+      </div>
+      <button class="burger-menu" (click)="toggleMenu()" [class.active]="isMenuOpen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links desktop-nav">
+        <a routerLink="/campaigns" routerLinkActive="active">Campaigns</a>
+        <a routerLink="/leads" routerLinkActive="active">Leads</a>
+        <a routerLink="/bulk-upload" routerLinkActive="active">Bulk Upload</a>
+        <a routerLink="/analytics/engagement-upload" routerLinkActive="active">Analytics Data</a>
+      </div>
+    </div>
+    <div class="navbar-right">
+      <div class="session-timer">
+        <span>{{ remainingTime }}</span>
+      </div>
+      <div class="user-info">
+        <span class="user-name">{{ currentUser?.username }}</span>
+        <button class="btn-logout desktop-logout" (click)="logout()">Sign Out</button>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-nav" [class.open]="isMenuOpen">
+    <a routerLink="/campaigns" routerLinkActive="active" (click)="closeMenu()">Campaigns</a>
+    <a routerLink="/leads" routerLinkActive="active" (click)="closeMenu()">Leads</a>
+    <a routerLink="/bulk-upload" routerLinkActive="active" (click)="closeMenu()">Bulk Upload</a>
+    <a routerLink="/analytics/engagement-upload" routerLinkActive="active" (click)="closeMenu()">Analytics Data</a>
+    <button class="btn-logout mobile-logout" (click)="logout()">Sign Out</button>
+  </div>
+</nav>

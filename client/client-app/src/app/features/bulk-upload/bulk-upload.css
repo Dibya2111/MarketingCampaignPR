@@ -1,0 +1,411 @@
+.bulk-upload-container {
+  padding: 20px;
+  background: lightgray;
+  min-height: 100vh;
+}
+
+.page-header {
+  background: white;
+  padding: 20px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  color: darkblue;
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.page-header p {
+  color: gray;
+  font-size: 16px;
+}
+
+.upload-section {
+  margin-bottom: 30px;
+}
+
+.upload-card {
+  background: white;
+  padding: 30px;
+  border: 2px solid gray;
+  border-radius: 10px;
+}
+
+.upload-card h3 {
+  color: darkblue;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: black;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.help-text {
+  color: gray;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.btn-primary {
+  background: darkblue;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-primary:hover {
+  background: blue;
+}
+
+.btn-primary:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: orange;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-secondary:hover {
+  background: darkorange;
+}
+
+.btn-sm {
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.alert {
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.alert-error {
+  background: lightpink;
+  border: 2px solid red;
+  color: darkred;
+}
+
+.alert-success {
+  background: lightgreen;
+  border: 2px solid green;
+  color: darkgreen;
+}
+
+.template-section {
+  background: white;
+  padding: 30px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.template-section h3 {
+  color: darkblue;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.template-section p {
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.template-container {
+  border: 2px solid gray;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.template-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  background: lightblue;
+}
+
+.template-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  border-top: 1px solid gray;
+}
+
+.template-header span,
+.template-row span {
+  padding: 15px;
+  border-right: 1px solid gray;
+  font-weight: bold;
+}
+
+.template-header span:last-child,
+.template-row span:last-child {
+  border-right: none;
+}
+
+.template-header span {
+  color: darkblue;
+}
+
+.template-notes {
+  background: lightyellow;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.template-notes h4 {
+  color: darkblue;
+  margin-bottom: 15px;
+}
+
+.template-notes ul {
+  margin-bottom: 15px;
+  padding-left: 20px;
+}
+
+.template-notes li {
+  margin-bottom: 8px;
+  color: black;
+}
+
+.btn-download {
+  background: green;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-download:hover {
+  background: darkgreen;
+}
+
+.history-section h3 {
+  color: darkblue;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.table-container {
+  background: white;
+  border: 2px solid gray;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  background: lightblue;
+  padding: 15px;
+  text-align: left;
+  font-weight: bold;
+  color: darkblue;
+  border-bottom: 1px solid gray;
+}
+
+.data-table td {
+  padding: 15px;
+  border-bottom: 1px solid lightgray;
+  color: black;
+}
+
+.data-table tr:hover {
+  background: lightyellow;
+}
+
+.success-text {
+  color: green;
+  font-weight: bold;
+}
+
+.error-text {
+  color: red;
+  font-weight: bold;
+}
+
+.no-data {
+  text-align: center;
+  color: gray;
+  font-style: italic;
+  padding: 50px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow: hidden;
+  border: 3px solid gray;
+}
+
+.modal-header {
+  padding: 20px;
+  border-bottom: 2px solid gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: lightblue;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: darkblue;
+}
+
+.btn-close {
+  background: red;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-close:hover {
+  background: darkred;
+}
+
+.modal-body {
+  padding: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.status-valid {
+  color: green;
+  font-weight: bold;
+}
+
+.status-invalid {
+  color: red;
+  font-weight: bold;
+}
+
+.preview-section {
+  margin-bottom: 30px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.pagination button {
+  background: darkblue;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: blue;
+}
+
+.pagination button:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.page-info {
+  color: black;
+  font-weight: bold;
+}
+
+.preview-summary {
+  background: lightyellow;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.preview-summary p {
+  margin-bottom: 15px;
+  color: black;
+}
+
+.preview-summary button {
+  background: orange;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.preview-summary button:hover {
+  background: darkorange;
+}
+
+@media (max-width: 768px) {
+  .bulk-upload-container {
+    padding: 10px;
+  }
+  
+  .template-header,
+  .template-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .template-header span,
+  .template-row span {
+    border-right: none;
+    border-bottom: 1px solid gray;
+  }
+}
