@@ -21,14 +21,16 @@ namespace MarketingCampaignServer.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCampaigns()
         {
-            var campaigns = await _campaignService.GetAllCampaignsAsync();
+            long userId = GetCurrentUserId();
+            var campaigns = await _campaignService.GetAllCampaignsAsync(userId);
             return Ok(campaigns);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCampaignById(long id)
         {
-            var campaign = await _campaignService.GetCampaignByIdAsync(id);
+            long userId = GetCurrentUserId();
+            var campaign = await _campaignService.GetCampaignByIdAsync(id, userId);
             if (campaign == null)
                 return NotFound(new { message = "Campaign not found" });
 
@@ -86,7 +88,8 @@ namespace MarketingCampaignServer.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCampaign(long id)
         {
-            bool deleted = await _campaignService.DeleteCampaignAsync(id);
+            long userId = GetCurrentUserId();
+            bool deleted = await _campaignService.DeleteCampaignAsync(id, userId);
             if (!deleted)
                 return NotFound(new { message = "Campaign not found for deletion" });
 

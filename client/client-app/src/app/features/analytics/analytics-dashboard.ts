@@ -31,8 +31,8 @@ export class AnalyticsDashboardComponent implements OnInit {
 
   public barChartData: ChartConfiguration['data'] = {
     datasets: [
-      { data: [], label: 'Open Rate (%)', backgroundColor: '#3498db' },
-      { data: [], label: 'Conversion Rate (%)', backgroundColor: '#e74c3c' }
+      { data: [], label: 'Open Rate (%)', backgroundColor: 'green' },
+      { data: [], label: 'Conversion Rate (%)', backgroundColor: 'yellow' }
     ],
     labels: []
   };
@@ -113,8 +113,8 @@ export class AnalyticsDashboardComponent implements OnInit {
 
     this.barChartData = {
       datasets: [
-        { data: openRates, label: 'Open Rate (%)', backgroundColor: '#3498db' },
-        { data: conversionRates, label: 'Conversion Rate (%)', backgroundColor: '#e74c3c' }
+        { data: openRates, label: 'Open Rate (%)', backgroundColor: 'lightgreen' },
+        { data: conversionRates, label: 'Conversion Rate (%)', backgroundColor: 'yellow' }
       ],
       labels: labels
     };

@@ -20,19 +20,21 @@ namespace MarketingCampaignServer.Controllers
             _leadService = leadService;
             _segmentHelper = segmentHelper;
         }
-0
+
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] long? campaignId, [FromQuery] string? segment,
             [FromQuery] string? search, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
         {
-            var (items, total) = await _leadService.GetLeadsAsync(campaignId, segment, search, page, pageSize);
+            long userId = GetCurrentUserId();
+            var (items, total) = await _leadService.GetLeadsAsync(campaignId, segment, search, page, pageSize, userId);
             return Ok(new { items, total });
         }
 
         [HttpGet("{id:long}")]
         public async Task<IActionResult> GetById(long id)
         {
-            var lead = await _leadService.GetLeadByIdAsync(id);
+            long userId = GetCurrentUserId();
+            var lead = await _leadService.GetLeadByIdAsync(id, userId);
             if (lead == null) return NotFound(new { message = "Lead not found." });
             return Ok(lead);
         }
@@ -90,7 +92,8 @@ namespace MarketingCampaignServer.Controllers
         [HttpDelete("{id:long}")]
         public async Task<IActionResult> Delete(long id)
         {
-            var deleted = await _leadService.DeleteLeadAsync(id);
+            long userId = GetCurrentUserId();
+            var deleted = await _leadService.DeleteLeadAsync(id, userId);
             if (!deleted) return NotFound(new { message = "Lead not found." });
             return Ok(new { message = "Lead deleted permanently." });
         }

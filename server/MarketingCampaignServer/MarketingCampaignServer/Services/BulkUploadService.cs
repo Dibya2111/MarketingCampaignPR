@@ -239,9 +239,10 @@ namespace MarketingCampaignServer.Services
             };
         }
 
-        public async Task<IEnumerable<BulkUploadLogDto>> GetUploadLogsAsync()
+        public async Task<IEnumerable<BulkUploadLogDto>> GetUploadLogsAsync(long userId)
         {
             var logs = await _context.bulkuploadlogs
+                .Where(l => l.CreatedByUserId == userId)
                 .OrderByDescending(l => l.UploadedAt)
                 .ToListAsync();
 
@@ -256,10 +257,13 @@ namespace MarketingCampaignServer.Services
             });
         }
 
-        public async Task<IEnumerable<BulkUploadDetailDto>> GetUploadDetailsAsync(long uploadId)
+        public async Task<IEnumerable<BulkUploadDetailDto>> GetUploadDetailsAsync(long uploadId, long userId)
         {
             var details = await _context.bulkuploaddetails
                 .Where(d => d.UploadId == uploadId)
+                .Join(_context.bulkuploadlogs, d => d.UploadId, l => l.UploadId, (d, l) => new { d, l })
+                .Where(x => x.l.CreatedByUserId == userId)
+                .Select(x => x.d)
                 .OrderBy(d => d.DetailId)
                 .ToListAsync();
 

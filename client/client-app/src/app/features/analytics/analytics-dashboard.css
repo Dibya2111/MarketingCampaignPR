@@ -142,26 +142,17 @@
 .btn-segment-chart {
   background: orange;
   color: white;
-  border: 2px solid darkorange;
+  border: 2px solid orange;
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  box-shadow: 0 3px 6px rgba(255, 165, 0, 0.3);
-  animation: pulse 2s infinite;
 }
 
 .btn-segment-chart:hover {
-  background: darkorange;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 10px rgba(255, 165, 0, 0.4);
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 3px 6px rgba(255, 165, 0, 0.3); }
-  50% { box-shadow: 0 5px 15px rgba(255, 165, 0, 0.6); }
-  100% { box-shadow: 0 3px 6px rgba(255, 165, 0, 0.3); }
+  background: rgb(152, 67, 7);
+  border: white;
 }
 
 .btn-export {

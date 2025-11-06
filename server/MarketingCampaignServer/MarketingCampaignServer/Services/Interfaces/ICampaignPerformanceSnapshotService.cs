@@ -7,9 +7,9 @@ namespace MarketingCampaignServer.Services.Interfaces
     {
         Task<CampaignPerformanceSnapshotDto?> CreateSnapshotAsync(long campaignId, long createdByUserId);
 
-        Task<IEnumerable<CampaignPerformanceSnapshotDto>> GetSnapshotsByCampaignAsync(long campaignId);
+        Task<IEnumerable<CampaignPerformanceSnapshotDto>> GetSnapshotsByCampaignAsync(long campaignId, long userId);
 
-        Task<IEnumerable<CampaignPerformanceSnapshotDto>> GetAllSnapshotsAsync();
+        Task<IEnumerable<CampaignPerformanceSnapshotDto>> GetAllSnapshotsAsync(long userId);
     }
 
 }

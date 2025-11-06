@@ -43,7 +43,8 @@ namespace MarketingCampaignServer.Controllers
         [HttpGet("logs")]
         public async Task<IActionResult> GetLogs()
         {
-            var logs = await _bulkService.GetUploadLogsAsync();
+            var userId = GetCurrentUserId();
+            var logs = await _bulkService.GetUploadLogsAsync(userId);
             return Ok(logs);
         }
 
@@ -53,7 +54,8 @@ namespace MarketingCampaignServer.Controllers
             if (uploadId <= 0)
                 return BadRequest(new { message = "Invalid uploadId" });
 
-            var details = await _bulkService.GetUploadDetailsAsync(uploadId);
+            var userId = GetCurrentUserId();
+            var details = await _bulkService.GetUploadDetailsAsync(uploadId, userId);
             return Ok(details);
         }
     }

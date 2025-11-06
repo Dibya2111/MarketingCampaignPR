@@ -9,11 +9,12 @@ namespace MarketingCampaignServer.Services.Interfaces
             string? segment = null,
             string? search = null,
             int page = 1,
-            int pageSize = 20);
+            int pageSize = 20,
+            long? userId = null);
 
-        Task<LeadDto?> GetLeadByIdAsync(long id);
+        Task<LeadDto?> GetLeadByIdAsync(long id, long userId);
         Task<LeadDto> CreateLeadAsync(CreateLeadDto dto, long createdByUserId);
         Task<LeadDto?> UpdateLeadAsync(UpdateLeadDto dto, long modifiedByUserId);
-        Task<bool> DeleteLeadAsync(long id);
+        Task<bool> DeleteLeadAsync(long id, long userId);
     }
 }

@@ -47,7 +47,8 @@ namespace MarketingCampaignServer.Controllers
             if (campaignId <= 0)
                 return BadRequest(new { message = "Invalid CampaignId. It must be greater than zero." });
 
-            var snapshots = await _snapshotService.GetSnapshotsByCampaignAsync(campaignId);
+            var userId = GetCurrentUserId();
+            var snapshots = await _snapshotService.GetSnapshotsByCampaignAsync(campaignId, userId);
             if (snapshots == null)
                 return NotFound(new { message = "No snapshots found for the provided campaign." });
 
@@ -57,7 +58,8 @@ namespace MarketingCampaignServer.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAllSnapshots()
         {
-            var snapshots = await _snapshotService.GetAllSnapshotsAsync();
+            var userId = GetCurrentUserId();
+            var snapshots = await _snapshotService.GetAllSnapshotsAsync(userId);
             return Ok(snapshots);
         }
     }

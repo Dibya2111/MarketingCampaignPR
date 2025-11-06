@@ -70,10 +70,13 @@ namespace MarketingCampaignServer.Services
             };
         }
 
-        public async Task<IEnumerable<CampaignPerformanceSnapshotDto>> GetSnapshotsByCampaignAsync(long campaignId)
+        public async Task<IEnumerable<CampaignPerformanceSnapshotDto>> GetSnapshotsByCampaignAsync(long campaignId, long userId)
         {
             var snapshots = await _context.campaignperformancesnapshots
                 .Where(s => s.CampaignId == campaignId)
+                .Join(_context.campaigns, s => s.CampaignId, c => c.CampaignId, (s, c) => new { s, c })
+                .Where(x => x.c.CreatedByUserId == userId)
+                .Select(x => x.s)
                 .OrderByDescending(s => s.DateCaptured)
                 .ToListAsync();
 
@@ -88,9 +91,12 @@ namespace MarketingCampaignServer.Services
             });
         }
 
-        public async Task<IEnumerable<CampaignPerformanceSnapshotDto>> GetAllSnapshotsAsync()
+        public async Task<IEnumerable<CampaignPerformanceSnapshotDto>> GetAllSnapshotsAsync(long userId)
         {
             var snapshots = await _context.campaignperformancesnapshots
+                .Join(_context.campaigns, s => s.CampaignId, c => c.CampaignId, (s, c) => new { s, c })
+                .Where(x => x.c.CreatedByUserId == userId)
+                .Select(x => x.s)
                 .OrderByDescending(s => s.DateCaptured)
                 .ToListAsync();
 

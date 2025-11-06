@@ -26,7 +26,7 @@ namespace MarketingCampaignServer.Helpers
             {
                 var name = campaign.CampaignName.ToLower();
 
-                if (name.Contains("summer") || name.Contains("monsoon") || name.Contains("festival") || name.Contains("holiday"))
+                if (name.Contains("summer") || name.Contains("monsoon") || name.Contains("festival") || name.Contains("holiday") || name.Contains("winter"))
                     return segments.FirstOrDefault(s => s.SegmentName == "Seasonal")?.SegmentName ?? "Seasonal";
 
                 if (name.Contains("corporate") || name.Contains("enterprise") || name.Contains("b2b"))

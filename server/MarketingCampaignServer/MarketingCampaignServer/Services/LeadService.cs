@@ -21,7 +21,7 @@ namespace MarketingCampaignServer.Services
         }
 
         public async Task<(List<LeadDto> Items, int TotalCount)> GetLeadsAsync(long? campaignId = null,
-            string? segment = null, string? search = null, int page = 1, int pageSize = 20)
+            string? segment = null, string? search = null, int page = 1, int pageSize = 20, long? userId = null)
         {
             if (page < 1) page = 1;
             if (pageSize <= 0) pageSize = 20;
@@ -30,6 +30,9 @@ namespace MarketingCampaignServer.Services
                 .Include(l => l.Campaign)
                 .Where(l => l.IsDeleted == false || l.IsDeleted == null)
                 .AsQueryable();
+                
+            if (userId.HasValue)
+                query = query.Where(l => l.CreatedByUserId == userId.Value);
 
             if (campaignId.HasValue)
                 query = query.Where(l => l.CampaignId == campaignId.Value);
@@ -69,11 +72,11 @@ namespace MarketingCampaignServer.Services
 
             return (items, total);
         }
-        public async Task<LeadDto?> GetLeadByIdAsync(long id)
+        public async Task<LeadDto?> GetLeadByIdAsync(long id, long userId)
         {
             var l = await _context.leads
                 .Include(x => x.Campaign)
-                .FirstOrDefaultAsync(x => x.LeadId == id && (x.IsDeleted == false || x.IsDeleted == null));
+                .FirstOrDefaultAsync(x => x.LeadId == id && (x.IsDeleted == false || x.IsDeleted == null) && x.CreatedByUserId == userId);
 
             if (l == null) return null;
 
@@ -223,9 +226,9 @@ namespace MarketingCampaignServer.Services
             };
         }
 
-        public async Task<bool> DeleteLeadAsync(long id)
+        public async Task<bool> DeleteLeadAsync(long id, long userId)
         {
-            var existing = await _context.leads.FirstOrDefaultAsync(x => x.LeadId == id);
+            var existing = await _context.leads.FirstOrDefaultAsync(x => x.LeadId == id && x.CreatedByUserId == userId);
             if (existing == null) return false;
 
             var campaignId = existing.CampaignId;

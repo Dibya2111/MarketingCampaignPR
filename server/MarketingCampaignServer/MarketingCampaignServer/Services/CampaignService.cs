@@ -15,10 +15,10 @@ namespace MarketingCampaignServer.Services
         {
             _context = context;
         }
-        public async Task<List<CampaignDto>> GetAllCampaignsAsync()
+        public async Task<List<CampaignDto>> GetAllCampaignsAsync(long userId)
         {
             var campaigns = await _context.campaigns
-                .Where(c => c.IsDeleted == false || c.IsDeleted == null)
+                .Where(c => (c.IsDeleted == false || c.IsDeleted == null) && c.CreatedByUserId == userId)
                 .Select(c => new CampaignDto
                 {
                     CampaignId = c.CampaignId,
@@ -38,10 +38,10 @@ namespace MarketingCampaignServer.Services
             return campaigns;
         }
 
-        public async Task<CampaignDto?> GetCampaignByIdAsync(long campaignId)
+        public async Task<CampaignDto?> GetCampaignByIdAsync(long campaignId, long userId)
         {
             var c = await _context.campaigns
-                .FirstOrDefaultAsync(x => x.CampaignId == campaignId && (x.IsDeleted == false || x.IsDeleted == null));
+                .FirstOrDefaultAsync(x => x.CampaignId == campaignId && (x.IsDeleted == false || x.IsDeleted == null) && x.CreatedByUserId == userId);
 
             if (c == null)
                 return null;
@@ -184,9 +184,9 @@ namespace MarketingCampaignServer.Services
             };
         }
 
-        public async Task<bool> DeleteCampaignAsync(long campaignId)
+        public async Task<bool> DeleteCampaignAsync(long campaignId, long userId)
         {
-            var existing = await _context.campaigns.FirstOrDefaultAsync(c => c.CampaignId == campaignId);
+            var existing = await _context.campaigns.FirstOrDefaultAsync(c => c.CampaignId == campaignId && c.CreatedByUserId == userId);
             if (existing == null)
                 return false;
 
