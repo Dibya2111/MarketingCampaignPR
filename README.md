@@ -26,18 +26,17 @@ Hello Visitors!! This is my marketing campaign management project that I built f
 
 ## Database Setup
 
-You need SQL Server running on your machine.
+You need MySQL Workbench CE running on your machine. Database Name: MarketingCampaignDB
 ### Connection String
 
 Go to `server/MarketingCampaignServer/MarketingCampaignServer/appsettings.json` and change this line:
 
-```
-"DefaultConnection": "Server=localhost;Database=MarketingCampaignDB;User Id=your_username;Password=your_password;TrustServerCertificate=true;"
-```
+"DefaultConnection": "Server=localhost;Database=MarketingCampaignDB;User Id=username;Password=password;TrustServerCertificate=true;"
 
 ### Database Creation
 Please Follow the Query File to set up the database and table in your db.
 Sql Scripts.sql file -- File Name
+
 ## How to run this thing
 
 ### Backend (API)
@@ -109,7 +108,6 @@ Sql Scripts.sql file -- File Name
 
 ## Project Structure
 
-```
 MarketingCampaignPR/
 ├── server/
 │   └── MarketingCampaignServer/
@@ -124,7 +122,6 @@ MarketingCampaignPR/
         │   ├── core/
         │   └── shared/
         └── package.json
-```
 
 ## Future improvements I might add
 
