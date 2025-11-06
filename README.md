@@ -31,7 +31,7 @@ You need MySQL Workbench CE running on your machine. Database Name: MarketingCam
 
 Go to `server/MarketingCampaignServer/MarketingCampaignServer/appsettings.json` and change this line:
 
-"DefaultConnection": "Server=localhost;Database=MarketingCampaignDB;User Id=username;Password=password;TrustServerCertificate=true;"
+`"DefaultConnection": "Server=localhost;Database=MarketingCampaignDB;User Id=username;Password=password;TrustServerCertificate=true;"`
 
 ### Database Creation
 Please Follow the Query File to set up the database and table in your db.
@@ -105,23 +105,6 @@ Sql Scripts.sql file -- File Name
 **CORS errors:**
 - Backend has CORS enabled for localhost:4200
 - If you change frontend port, update CORS settings in Program.cs
-
-## Project Structure
-
-MarketingCampaignPR/
-├── server/
-│   └── MarketingCampaignServer/
-│       ├── Controllers/
-│       ├── Services/
-│       ├── Models/
-│       └── Data/
-└── client/
-    └── client-app/
-        ├── src/app/
-        │   ├── features/
-        │   ├── core/
-        │   └── shared/
-        └── package.json
 
 ## Future improvements I might add
 
