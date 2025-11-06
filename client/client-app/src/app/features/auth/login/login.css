@@ -11,7 +11,6 @@
   text-align: center;
   padding-top: 200px;
 }
-
 .brand-content h1 {
   font-size: 40px;
   margin-bottom: 20px;
@@ -132,6 +131,16 @@
   color: blue;
 }
 
+.icon {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.icon img {
+  width: 180px;
+  height: 180px;
+}
+
 @media (max-width: 768px) {
   .login-container {
     flex-direction: column;
@@ -143,7 +152,15 @@
     width: 100%;
     height: 150px;
     padding: 20px;
-    padding-top: 40px;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .brand-content {
+    text-align: left;
   }
   
   .brand-content h1 {
@@ -153,6 +170,16 @@
   
   .brand-content p {
     font-size: 16px;
+  }
+  
+  .icon {
+    margin-top: 0;
+    flex-shrink: 0;
+  }
+  
+  .icon img {
+    width: 60px;
+    height: 60px;
   }
   
   .login-right {
