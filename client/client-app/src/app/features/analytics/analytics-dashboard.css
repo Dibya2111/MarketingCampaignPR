@@ -101,10 +101,6 @@
   color: black;
 }
 
-.metrics-table tr:hover {
-  background: lightyellow;
-}
-
 .btn-view {
   background: darkblue;
   color: white;
