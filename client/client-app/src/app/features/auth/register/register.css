@@ -10,6 +10,7 @@
   color: white;
   text-align: center;
   padding-top: 200px;
+  height: 100%;
 }
 
 .brand-content h1 {
@@ -77,11 +78,12 @@
 }
 
 .password-requirements {
-  background: lightyellow;
+  background: whitesmoke;
   padding: 10px;
-  border: 1px solid orange;
+  border: 1px solid rgb(221, 209, 186);
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 30px;
+  font-size: 20px;
 }
 
 .password-requirements small {
