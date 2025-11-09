@@ -30,14 +30,17 @@ namespace MarketingCampaignServer.Services
                 .Where(m => m.CampaignId == campaignId && m.IsDeleted == false)
                 .ToListAsync();
 
+            // Count actual leads for this campaign
+            var totalLeads = await _context.leads
+                .Where(l => l.CampaignId == campaignId && (l.IsDeleted == false || l.IsDeleted == null))
+                .CountAsync();
+
             decimal avgOpenRate = 0, avgConversionRate = 0;
-            int totalLeads = 0;
 
             if (metrics.Any())
             {
                 avgOpenRate = metrics.Average(m => m.OpenRate ?? 0);
                 avgConversionRate = metrics.Average(m => m.ConversionRate ?? 0);
-                totalLeads = metrics.Count;
             }
 
             var snapshot = new campaignperformancesnapshots
@@ -53,7 +56,6 @@ namespace MarketingCampaignServer.Services
 
             campaign.OpenRate = avgOpenRate;
             campaign.ConversionRate = avgConversionRate;
-            campaign.TotalLeads = totalLeads;
             campaign.LastModifiedUserId = createdByUserId;
             campaign.LastModifiedDate = DateTime.UtcNow;
 
