@@ -37,11 +37,10 @@ export class LeadListComponent implements OnInit {
     search: ''
   };
   
-  // Multiple search
+  // Multiple leads search
   multipleSearch = '';
-  allLeads: Lead[] = []; // Store all leads for filtering
+  allLeads: Lead[] = [];
 
-  // Analytics modal
   showAnalyticsModal = false;
   selectedLeadId = 0;
 

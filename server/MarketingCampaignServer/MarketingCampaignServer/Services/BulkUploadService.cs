@@ -16,13 +16,15 @@ namespace MarketingCampaignServer.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly SegmentAssignmentHelper _segmentHelper;
+        private readonly ICampaignService _campaignService;
 
         private static readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public BulkUploadService(ApplicationDbContext context, SegmentAssignmentHelper segmentHelper)
+        public BulkUploadService(ApplicationDbContext context, SegmentAssignmentHelper segmentHelper, ICampaignService campaignService)
         {
             _context = context;
             _segmentHelper = segmentHelper;
+            _campaignService = campaignService;
         }
 
         public async Task<BulkUploadLogDto> UploadLeadsAsync(BulkUploadRequestDto request, long uploadedByUserId)
@@ -47,6 +49,7 @@ namespace MarketingCampaignServer.Services
             await _context.SaveChangesAsync(); 
 
             var detailsToInsert = new List<bulkuploaddetails>();
+            var affectedCampaigns = new HashSet<long>();
             int valid = 0;
             int invalid = 0;
 
@@ -165,6 +168,9 @@ namespace MarketingCampaignServer.Services
 
                         _context.leads.Add(lead);
 
+                        if (campaignId.HasValue)
+                            affectedCampaigns.Add(campaignId.Value);
+
                         detailsToInsert.Add(new bulkuploaddetails
                         {
                             UploadId = uploadLog.UploadId,
@@ -220,6 +226,12 @@ namespace MarketingCampaignServer.Services
                 uploadLog.LastModifiedDate = DateTime.UtcNow;
 
                 await _context.SaveChangesAsync();
+
+                foreach (var campaignId in affectedCampaigns)
+                {
+                    await _campaignService.RecalculateCampaignMetricsAsync(campaignId);
+                }
+                
                 await tx.CommitAsync();
             }
             catch
