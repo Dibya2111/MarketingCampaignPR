@@ -37,6 +37,10 @@ Go to `server/MarketingCampaignServer/MarketingCampaignServer/appsettings.json` 
 Please Follow the Query File to set up the database and table in your db.
 Sql Scripts.sql file -- File Name
 
+###  Application Db Context and Entities creation automatically as per db in server side
+dotnet ef dbcontext scaffold "Server=localhost;Port=3306;Database=marketing_campaign;User=root;Password=Kanhapreet@88;" Pomelo.EntityFrameworkCore.MySql --output-dir Models/Entities --context-dir Data --context ApplicationDbContext --use-database-names --force
+Run this command to get automated entities and ApplicationDb context creation in the code as db first approach
+
 ## How to run this thing
 
 ### Backend (API)
